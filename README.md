@@ -1,0 +1,3 @@
+# Waffle
+
+A Discord bot
