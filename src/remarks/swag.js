@@ -1,11 +1,13 @@
 const Discord = require('discord.js');
 
+const images = 6;
+
 module.exports = {
 	check(message) {
 		return message.content.toLowerCase().includes('swag');
 	},
 	execute(message, args) {
-		const file = new Discord.MessageAttachment(__dirname + '/' + '../../assets/remarks/swag' + Math.round(Math.random() * 3) + '.jpg');
+		const file = new Discord.MessageAttachment(__dirname + '/' + '../../assets/remarks/swag' + Math.round(Math.random() * (images - 1)) + '.jpg');
 		message.channel.send({ files: [file] });
 		return;
 	},
