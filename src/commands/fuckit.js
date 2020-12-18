@@ -11,7 +11,7 @@ module.exports = {
 		const tmpPath = path.resolve(__dirname + '/../../assets/tmp/' + crypto.randomBytes(Math.ceil(10/2)).toString('hex').slice(0,10) + '.jpg');
 		const template = path.resolve(__dirname + '/' + '../../assets/templates/meth.png');
 		
-		child_process.execSync('convert -background \'#00000000\' -size 420x125 -fill white label:\'' + args[0] + '\' miff:-|composite -gravity SouthEast - ' + '"' + template + '" "' + tmpPath + '"');
+		child_process.execSync('convert -background \'#00000000\' -size 420x125 -fill white label:\'' + args.join(' ') + '\' miff:-|composite -gravity SouthEast - ' + '"' + template + '" "' + tmpPath + '"');
 		
 		const file = new Discord.MessageAttachment(tmpPath);
 
