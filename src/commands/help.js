@@ -8,6 +8,7 @@ module.exports = {
 			\`swag\`
 			\`so sad\`
 			\`pizza\`
+			\`this is fine\`
 			\`classic garfield moment\`
 			**Commands**
 			\`help\`
