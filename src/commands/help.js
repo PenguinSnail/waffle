@@ -5,11 +5,12 @@ module.exports = {
 		message.channel.send(`
 			**Remarks**
 			\`bup\`
+			\`swag\`
 			\`so sad\`
 			\`pizza\`
 			\`classic garfield moment\`
 			**Commands**
-			--------------------
+			\`help\`
 		`.replace(/\t+/g, ''));
 	},
 };
