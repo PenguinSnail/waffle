@@ -9,6 +9,7 @@ module.exports = {
 			\`so sad\`
 			\`pizza\`
 			\`this is fine\`
+			\`on baby\`
 			\`classic garfield moment\`
 			**Commands**
 			\`help\`
