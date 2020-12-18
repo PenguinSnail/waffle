@@ -5,7 +5,7 @@ module.exports = {
 		return message.content.toLowerCase().includes('pizza');
 	},
 	execute(message, args) {
-		const file = new Discord.MessageAttachment(__dirname + '/' + '../../assets/pizza.gif');
+		const file = new Discord.MessageAttachment(__dirname + '/' + '../../assets/remarks/pizza.gif');
 		message.channel.send({ files: [file] });
 		return;
 	},
