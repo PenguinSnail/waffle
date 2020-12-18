@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/PenguinSnail/waffle/issues"
   },
-  "homepage": "https://github.com/PenguinSnail/waffle#readme"
+  "homepage": "https://github.com/PenguinSnail/waffle#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  }
 }
