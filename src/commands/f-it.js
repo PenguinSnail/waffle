@@ -5,7 +5,7 @@ const child_process = require('child_process');
 const path = require('path');
 
 module.exports = {
-	name: 'fuckit',
+	name: 'fit',
 	description: 'Fuck it, I\'m making ___',
 	execute(message, args) {
 		const tmpPath = path.resolve(__dirname + '/../../assets/tmp/' + crypto.randomBytes(Math.ceil(10/2)).toString('hex').slice(0,10) + '.jpg');

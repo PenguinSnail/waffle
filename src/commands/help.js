@@ -13,7 +13,7 @@ module.exports = {
 			\`classic garfield moment\`
 			**Commands**
 			\`help\`
-			\`fuckit\`
+			\`fit\` (F___ It)
 			\`goingto\`
 		`.replace(/\t+/g, ''));
 	},
