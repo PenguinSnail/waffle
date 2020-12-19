@@ -14,6 +14,7 @@ module.exports = {
 			**Commands**
 			\`help\`
 			\`fuckit\`
+			\`goingto\`
 		`.replace(/\t+/g, ''));
 	},
 };
