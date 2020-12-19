@@ -1,6 +1,8 @@
-FROM node:12.18.4-stretch
+FROM node:current-alpine
 
 WORKDIR /app
+
+RUN apk --update add imagemagick
 
 COPY ./package.json /app
 COPY ./package-lock.json /app
