@@ -33,7 +33,7 @@ module.exports = {
 		const convert = child_process.spawn(
 			'convert',
 			[
-				'-background', '\'#00000000\'',
+				'-background', '#00000000',
 				'-size', '410x125',
 				'-fill', 'white',
 				`caption:${args.join(' ')}`,

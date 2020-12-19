@@ -33,7 +33,7 @@ module.exports = {
 		const convertTop = child_process.spawn(
 			'convert',
 			[
-				'-background', '\'#00000000\'',
+				'-background', '#00000000',
 				'-size', '420x110',
 				'-font', 'Impact',
 				'-fill', 'white',
@@ -59,7 +59,7 @@ module.exports = {
 			const convertBottom = child_process.spawn(
 				'convert',
 				[
-					'-background', '\'#00000000\'',
+					'-background', '#00000000',
 					'-size', '735x110',
 					'-font', 'Impact',
 					'-fill', 'white',
