@@ -15,6 +15,7 @@ module.exports = {
 			\`help\`
 			\`fit\` (F___ It)
 			\`goingto\`
+			\`allmyhomies\`
 		`.replace(/\t+/g, ''));
 		resolve();
 	}),
