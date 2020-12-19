@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'help',
 	description: 'Waffle Help',
-	execute(message, args) {
+	execute: (message, args) => new Promise((resolve, reject) => {
 		message.channel.send(`
 			**Remarks**
 			\`bup\`
@@ -16,5 +16,6 @@ module.exports = {
 			\`fit\` (F___ It)
 			\`goingto\`
 		`.replace(/\t+/g, ''));
-	},
+		resolve();
+	}),
 };

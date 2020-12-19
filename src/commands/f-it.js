@@ -4,19 +4,69 @@ const crypto = require('crypto');
 const child_process = require('child_process');
 const path = require('path');
 
+const template = path.resolve(
+	__dirname +
+	'/../../assets/templates/meth.png'
+);
+
 module.exports = {
 	name: 'fit',
 	description: 'Fuck it, I\'m making ___',
-	execute(message, args) {
-		const tmpPath = path.resolve(__dirname + '/../../assets/tmp/' + crypto.randomBytes(Math.ceil(10/2)).toString('hex').slice(0,10) + '.jpg');
-		const template = path.resolve(__dirname + '/' + '../../assets/templates/meth.png');
-		
-		child_process.execSync('convert -background \'#00000000\' -size 420x125 -fill white label:\'' + args.join(' ') + '\' miff:-|composite -gravity SouthEast - ' + '"' + template + '" "' + tmpPath + '"');
-		
-		const file = new Discord.MessageAttachment(tmpPath);
+	execute: (message, args) => new Promise((resolve, reject) => {
+		if (args.length < 1) {
+			message.channel.send(`
+			**${this.description}**
+			${process.env.PREFIX}${this.name} <what you're making>
+		`.replace(/\t+/g, ''));
 
-		message.channel.send({ files: [file] });
+		resolve();
+		return;
+		}
+
+		const tmpPath = path.resolve(
+			__dirname +
+			'/../../assets/tmp/' +
+			crypto.randomBytes(Math.ceil(10/2)).toString('hex').slice(0,10) +
+			'.jpg'
+		);
 		
-		setTimeout(() => fs.unlinkSync(tmpPath), 60 * 1000);
-	},
+		const convert = child_process.spawn(
+			'convert',
+			[
+				'-background', '\'#00000000\'',
+				'-size', '410x125',
+				'-fill', 'white',
+				`caption:${args.join(' ')}`,
+				'miff:-'
+			]
+		);
+		const composite = child_process.spawn(
+			'composite',
+			[
+				'-gravity', 'SouthEast',
+				'-geometry', '+10+0',
+				'-', template,
+				tmpPath
+			]
+		);
+
+		convert.stdout.pipe(composite.stdin);
+
+		composite.on('exit', () => {
+			const file = new Discord.MessageAttachment(tmpPath);
+			message.channel.send({ files: [file] });
+		
+			setTimeout(() => {
+				try {
+					fs.unlinkSync(tmpPath);
+				} catch (e) {
+					console.error(`Error removing file ${tmpPath}`, e);
+				}
+			}, 60 * 1000);
+			resolve();
+		});
+
+		convert.on('error', e => reject(e));
+		composite.on('error', e => reject(e));
+	}),
 };
