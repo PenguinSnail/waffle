@@ -42,7 +42,7 @@ client.on('message', message => {
 
 	message.channel.startTyping();
 	client.commands.get(command).execute(message, args).then(() => {
-		message.channel.stopTyping()
+		message.channel.stopTyping();
 	}, e => {
 		console.error(e);
 		message.reply('there was an error trying to execute that command!');

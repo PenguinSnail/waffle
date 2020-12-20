@@ -16,6 +16,7 @@ module.exports = {
 			\`fit\` (F___ It)
 			\`goingto\`
 			\`allmyhomies\`
+			\`deepfake\`
 		`.replace(/\t+/g, ''));
 		resolve();
 	}),

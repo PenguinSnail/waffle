@@ -15,8 +15,8 @@ module.exports = {
 	execute: (message, args) => new Promise((resolve, reject) => {
 		if (args.length < 1) {
 			message.channel.send(`
-			**${this.description}**
-			${process.env.PREFIX}${this.name} <what you're making>
+			**fit**
+			${process.env.PREFIX}fit <what you're making>
 		`.replace(/\t+/g, ''));
 
 		resolve();
