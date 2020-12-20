@@ -2,7 +2,7 @@ FROM node:current-alpine
 
 WORKDIR /app
 
-RUN apk --update --no-cache add imagemagick \
+RUN apk --update --no-cache add imagemagick wget curl \
     msttcorefonts-installer fontconfig && \
     update-ms-fonts && \
     fc-cache -f
