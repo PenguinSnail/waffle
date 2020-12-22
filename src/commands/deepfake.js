@@ -25,7 +25,7 @@ module.exports = {
 
 		const id = crypto.randomBytes(Math.ceil(10/2)).toString('hex').slice(0,10)
 		
-		const userID = args[0].substring(3, args[0].length - 1);
+		const userID = args[0].replace(/\W/g, '');
 		message.guild.members.fetch(userID).then(fakeMember => {
 			const avatarURL = fakeMember.user.avatarURL();
 			const displayColor = fakeMember.displayHexColor;
@@ -205,6 +205,7 @@ module.exports = {
 				});
 			});
 		}, e => {
+			console.error(e);
 			message.channel.send('User not found!');
 			resolve();
 		});
