@@ -17,6 +17,7 @@ module.exports = {
 			\`goingto\`
 			\`allmyhomies\`
 			\`deepfake\`
+			\`undermybed\`
 		`.replace(/\t+/g, ''));
 		resolve();
 	}),
