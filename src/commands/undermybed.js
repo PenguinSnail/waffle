@@ -31,7 +31,7 @@ module.exports = {
 		
 		const userID = args[0].replace(/\W/g, '');
 		message.guild.members.fetch(userID).then(fakeMember => {
-			const avatarURL = fakeMember.user.avatarURL({size: 256});
+			const avatarURL = fakeMember.user.avatarURL({size: 512});
 
 			args.shift();
 
@@ -53,19 +53,29 @@ module.exports = {
 			mask.on('exit', code => {
 				// convert <url> -gravity Center mask.png -compose CopyOpacity -composite -trim avatar.png
 
-				const avatarCrop = child_process.spawn(
+				const avatarResize = child_process.spawn(
 					'convert',
 					[
 						avatarURL,
+						'-resize', '256x256',
+						'-'
+					]
+				);
+				avatarResize.on('error', e => reject(e));
+				const avatarCrop = child_process.spawn(
+					'convert',
+					[
+						'-',
 						'-gravity', 'Center',
 						path.resolve(tmpDir, `${id}_mask.png`),
 						'-compose', 'CopyOpacity',
 						'-composite',
 						'-trim',
-						path.resolve(tmpDir, `${id}_avatar.png`),
+						path.resolve(tmpDir, `${id}_avatar.png`)
 					]
 				);
 				avatarCrop.on('error', e => reject(e));
+				avatarResize.stdout.pipe(avatarCrop.stdin);
 
 				avatarCrop.on('exit', code => {
 					// composite -gravity southwest -geometry +50+0 avatar.png under-bed.png tmp.png
