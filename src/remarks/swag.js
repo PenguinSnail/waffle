@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-const images = 6;
+const images = 10;
 
 module.exports = {
 	check(message) {
