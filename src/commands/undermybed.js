@@ -19,7 +19,7 @@ module.exports = {
 	execute: (message, args) => new Promise((resolve, reject) => {
 		if (args.length < 2) {
 			message.channel.send(`
-				**deepfake**
+				**undermybed**
 				${process.env.PREFIX}undermybed <@user> <what's under your bed>
 			`.replace(/\t+/g, ''));
 
