@@ -9,15 +9,20 @@ const template = path.resolve(
 	'/../../assets/templates/all-my-homies.png'
 );
 
+const name = 'allmyhomies';
+const description = 'Fuck \\_\\_\\_, All my homies hate \\_\\_\\_';
+const arguments = '<text>';
+
 module.exports = {
-	name: 'allmyhomies',
-	description: 'Fuck ___, All my homies hate ___',
+	name: name,
+	description: description,
+	arguments: arguments,
 	execute: (message, args) => new Promise((resolve, reject) => {
 		if (args.length < 1) {
 			message.channel.send(`
-			**allmyhomies**
-			${process.env.PREFIX}allmyhomies <what your homies hate>
-		`.replace(/\t+/g, ''));
+				**${name}**
+				${process.env.PREFIX}${name} ${arguments}
+			`.replace(/\t+/g, ''));
 
 		resolve();
 		return;

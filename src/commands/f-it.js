@@ -9,15 +9,20 @@ const template = path.resolve(
 	'/../../assets/templates/meth.png'
 );
 
+const name = 'fit';
+const description = 'Fuck it, I\'m making \\_\\_\\_';
+const arguments = '<text>';
+
 module.exports = {
-	name: 'fit',
-	description: 'Fuck it, I\'m making ___',
+	name: name,
+	description: description,
+	arguments: arguments,
 	execute: (message, args) => new Promise((resolve, reject) => {
 		if (args.length < 1) {
 			message.channel.send(`
-			**fit**
-			${process.env.PREFIX}fit <what you're making>
-		`.replace(/\t+/g, ''));
+				**${name}**
+				${process.env.PREFIX}${name} ${arguments}
+			`.replace(/\t+/g, ''));
 
 		resolve();
 		return;

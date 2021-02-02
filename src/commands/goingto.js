@@ -9,15 +9,20 @@ const template = path.resolve(
 	'/../../assets/templates/going-to.png'
 );
 
+const name = 'goingto';
+const description = 'I am going to \\_\\_\\_';
+const arguments = '<text>';
+
 module.exports = {
-	name: 'goingto',
-	description: 'I am going to ___',
+	name: name,
+	description: description,
+	arguments: arguments,
 	execute: (message, args) => new Promise((resolve, reject) => {
 		if (args.length < 1) {
 			message.channel.send(`
-			**goingto**
-			${process.env.PREFIX}goingto <what you're going to>
-		`.replace(/\t+/g, ''));
+				**${name}**
+				${process.env.PREFIX}${name} ${arguments}
+			`.replace(/\t+/g, ''));
 
 		resolve();
 		return;

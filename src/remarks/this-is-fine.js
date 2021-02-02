@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 
 module.exports = {
+	name: 'this is fine',
 	check(message) {
 		return message.content.toLowerCase().includes('this is fine');
 	},

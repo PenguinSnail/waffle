@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 
 module.exports = {
+	name: 'on baby',
 	check(message) {
 		return message.content.toLowerCase().includes('on baby');
 	},

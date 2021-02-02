@@ -21,8 +21,23 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
+const helpMessage = new Discord.MessageEmbed().setTitle('Waffle Help');
+helpMessage.addFields(client.commands.map(c => ({
+	name: c.name,
+	value: `\`${process.env.PREFIX}${c.name} ${c.arguments}\`\n${c.description}\n`
+})));
+helpMessage.addFields({
+	name: 'Remarks',
+	value: client.remarks.map(r => r.name).join(', ')
+});
+
 client.on('message', message => {
 	if (message.author.bot) return;
+
+	if (message.content.toLowerCase().trim() === process.env.PREFIX + 'help') {
+		message.channel.send(helpMessage);
+		return;
+	}
 	
 	client.remarks.forEach(remark => {
 		if (remark.check(message)) {

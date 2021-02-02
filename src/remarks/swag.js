@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const images = 10;
 
 module.exports = {
+	name: 'swag',
 	check(message) {
 		return message.content.toLowerCase().includes('swag');
 	},

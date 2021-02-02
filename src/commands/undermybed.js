@@ -13,14 +13,19 @@ const tmpDir = path.resolve(
 	'/../../assets/tmp/'
 );
 
+const name = 'undermybed';
+const description = 'Dad, there\'s a \\_\\_\\_ under my bed';
+const arguments = '<@user> <text>';
+
 module.exports = {
-	name: 'undermybed',
-	description: 'Dad, there\'s a ___ under my bed',
+	name: name,
+	description: description,
+	arguments: arguments,
 	execute: (message, args) => new Promise((resolve, reject) => {
 		if (args.length < 2) {
 			message.channel.send(`
-				**undermybed**
-				${process.env.PREFIX}undermybed <@user> <what's under your bed>
+				**${name}**
+				${process.env.PREFIX}${name} ${arguments}
 			`.replace(/\t+/g, ''));
 
 			resolve();

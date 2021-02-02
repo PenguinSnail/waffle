@@ -9,14 +9,19 @@ const tmpDir = path.resolve(
 	'/../../assets/tmp/'
 );
 
+const name = 'deepfake';
+const description = '@user says \\_\\_\\_';
+const arguments = '<@user> <text>';
+
 module.exports = {
-	name: 'deepfake',
-	description: 'User says ___',
+	name: name,
+	description: description,
+	arguments: arguments,
 	execute: (message, args) => new Promise((resolve, reject) => {
 		if (args.length < 2) {
 			message.channel.send(`
-				**deepfake**
-				${process.env.PREFIX}deepfake <@user> <what @user says>
+				**${name}**
+				${process.env.PREFIX}${name} ${arguments}
 			`.replace(/\t+/g, ''));
 
 			resolve();
