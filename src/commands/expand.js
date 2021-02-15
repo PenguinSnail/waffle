@@ -30,7 +30,11 @@ module.exports = {
 			[]
 		];
 		args.forEach(word => {
-			const characters = word.replace(/[^0-9a-z]/gi, '').toLowerCase().split('');
+			const characters = word
+			.replace(/[\u2018\u2019]/g, "'")
+			.replace(/[\u201C\u201D]/g, '"')
+			.toLowerCase()
+			.split('');
 			characters.push(' ');
 
 			let currentLine = lines.length - 1;
@@ -60,12 +64,23 @@ module.exports = {
 					'-geometry', 'x100',
 					'+append',
 					...line.map(c => {
+						if (c === '-') c = '_HYPHEN';
+						if (c === '!') c = '_BANG';
+						if (c === '?') c = '_QUESTION';
+						if (c === '.') c = '_PERIOD';
+						if (c === ':') c = '_COLON';
+						if (c === '"') c = '_DQUOTE';
+						if (c === '\'') c = '_SQUOTE';
+						if (c === ',') c = '_COMMA';
+						if (c === '_') c = '_UNDERSCORE';
+						if (c === '#') c = '_POUND';
+
 						const files = fs.readdirSync(
 							path.resolve(`${__dirname}/../../assets/templates/expand-letters/`)
-						).filter(file => file.split('')[0] === c);
+						).filter(file => file.startsWith(c));
 
 						if (files.length < 1) {
-							return path.resolve(`${__dirname}/../../assets/templates/expand-letters/SPACE.png`);
+							return path.resolve(`${__dirname}/../../assets/templates/expand-letters/_SPACE.png`);
 						} else {
 							const randomChar = Math.round(Math.random() * (files.length - 1));
 							return path.resolve(`${__dirname}/../../assets/templates/expand-letters/${c}${randomChar}.png`);
@@ -102,31 +117,33 @@ module.exports = {
 					lineMerge.on('error', e => reject(e));
 
 					lineMerge.on('exit', code => {
-						const file = new Discord.MessageAttachment(tmpPath);
-						message.channel.send({ files: [file] });
+						if (fs.existsSync(tmpPath)) {
+							const file = new Discord.MessageAttachment(tmpPath);
+							message.channel.send({ files: [file] });
 
-						lines.forEach((line, lineIndex) => {
-							const removeLinePath = path.resolve(
-								__dirname +
-								'/../../assets/tmp/' +
-								randomID +
-								'-line' + lineIndex + '.jpg'
-							);
+							lines.forEach((line, lineIndex) => {
+								const removeLinePath = path.resolve(
+									__dirname +
+									'/../../assets/tmp/' +
+									randomID +
+									'-line' + lineIndex + '.jpg'
+								);
+								setTimeout(() => {
+									try {
+										fs.unlinkSync(removeLinePath);
+									} catch (e) {
+										console.error(`Error removing file ${removeLinePath}`, e);
+									}
+								}, 60 * 1000);
+							});
 							setTimeout(() => {
 								try {
-									fs.unlinkSync(removeLinePath);
+									fs.unlinkSync(tmpPath);
 								} catch (e) {
-									console.error(`Error removing file ${removeLinePath}`, e);
+									console.error(`Error removing file ${tmpPath}`, e);
 								}
 							}, 60 * 1000);
-						});
-						setTimeout(() => {
-							try {
-								fs.unlinkSync(tmpPath);
-							} catch (e) {
-								console.error(`Error removing file ${tmpPath}`, e);
-							}
-						}, 60 * 1000);
+						}
 
 						resolve();
 					});
