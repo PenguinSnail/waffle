@@ -6,11 +6,11 @@ const path = require('path');
 
 const template = path.resolve(
 	__dirname +
-	'/../../assets/templates/aint-exactly.png'
+	'/../../assets/templates/wish-all.png'
 );
 
-const name = 'aintexactly';
-const description = 'I ain\'t exactly \\_\\_\\_, but I ain\'t exactly \\_\\_\\_';
+const name = 'wishall';
+const description = 'I wish all \\_\\_\\_ a very \\_\\_\\_';
 const arguments = '"<text>" "<text>"';
 
 module.exports = {
@@ -52,7 +52,7 @@ module.exports = {
 			'convert',
 			[
 				'-background', '#00000000',
-				'-size', '375x110',
+				'-size', '235x160',
 				'-font', 'Impact',
 				'-fill', 'white',
 				'-gravity', 'center',
@@ -64,7 +64,7 @@ module.exports = {
 			'composite',
 			[
 				'-gravity', 'NorthWest',
-				'-geometry', '+330+240',
+				'-geometry', '+20+80',
 				'-', template,
 				tmpPath
 			]
@@ -77,7 +77,7 @@ module.exports = {
 				'convert',
 				[
 					'-background', '#00000000',
-					'-size', '390x110',
+					'-size', '260x110',
 					'-font', 'Impact',
 					'-fill', 'white',
 					'-gravity', 'Center',
@@ -89,7 +89,7 @@ module.exports = {
 				'composite',
 				[
 					'-gravity', 'NorthWest',
-					'-geometry', '+310+410',
+					'-geometry', '+20+290',
 					'-', tmpPath,
 					tmpPath
 				]
