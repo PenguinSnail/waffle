@@ -3,7 +3,6 @@ const fs = require('fs');
 const crypto = require('crypto');
 const child_process = require('child_process');
 const path = require('path');
-const glob = require('glob');
 
 const name = 'expand';
 const description = 'EXPAND DONG';
