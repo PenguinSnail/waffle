@@ -29,18 +29,32 @@ module.exports = {
 			[]
 		];
 		args.forEach(word => {
-			const characters = word
+			word = word
 			.replace(/[\u2018\u2019]/g, "'")
 			.replace(/[\u201C\u201D]/g, '"')
-			.toLowerCase()
-			.split('');
-			characters.push(' ');
+			.toLowerCase();
 
-			let currentLine = lines.length - 1;
-			const currentLength = lines[currentLine].length;
+			const files = fs.readdirSync(
+				path.resolve(`${__dirname}/../../assets/templates/expand/words/`)
+			).filter(file => file.startsWith(word));
 
-			if (currentLength + characters.length > 40) currentLine = currentLine + 1;
-			lines[currentLine] = lines[currentLine] ? lines[currentLine].concat(characters) : characters;
+			if (files.length > 0) {
+				let currentLine = lines.length - 1;
+				const currentLength = lines[currentLine].join('').length;
+
+				if (currentLength + word.length > 40) currentLine = currentLine + 1;
+				lines[currentLine] = lines[currentLine] ? lines[currentLine].concat([word]) : [word];
+				lines[currentLine].push(' ');
+			} else {
+				const characters = word.split('');
+				characters.push(' ');
+
+				let currentLine = lines.length - 1;
+				const currentLength = lines[currentLine].join().length;
+
+				if (currentLength + characters.length > 40) currentLine = currentLine + 1;
+				lines[currentLine] = lines[currentLine] ? lines[currentLine].concat(characters) : characters;
+			}
 		});
 
 		lines.forEach(line => {
@@ -75,14 +89,14 @@ module.exports = {
 						if (c === '#') c = '_POUND';
 
 						const files = fs.readdirSync(
-							path.resolve(`${__dirname}/../../assets/templates/expand-letters/`)
+							path.resolve(`${__dirname}/../../assets/templates/expand/${c.length > 1 ? 'words/' : 'characters/'}`)
 						).filter(file => file.startsWith(c));
 
 						if (files.length < 1) {
-							return path.resolve(`${__dirname}/../../assets/templates/expand-letters/_SPACE.png`);
+							return path.resolve(`${__dirname}/../../assets/templates/expand/characters/_SPACE.png`);
 						} else {
 							const randomChar = Math.round(Math.random() * (files.length - 1));
-							return path.resolve(`${__dirname}/../../assets/templates/expand-letters/${c}${randomChar}.png`);
+							return path.resolve(`${__dirname}/../../assets/templates/expand/${c.length > 1 ? 'words/' : 'characters/'}${c}${randomChar}.png`);
 						}
 					}),
 					linePath
