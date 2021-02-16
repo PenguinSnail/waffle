@@ -23,34 +23,36 @@ module.exports = {
 		return;
 		}
 
+		const wordFiles = fs.readdirSync(
+			path.resolve(`${__dirname}/../../assets/templates/expand/words/`)
+		);
+		const charFiles = fs.readdirSync(
+			path.resolve(`${__dirname}/../../assets/templates/expand/characters/`)
+		);
+
 		const randomID = crypto.randomBytes(Math.ceil(10/2)).toString('hex').slice(0,10);
 
 		let lines = [
 			[]
 		];
 		args.forEach(word => {
+			let currentLine = lines.length - 1;
+			const currentLength = lines[currentLine].join().length;
+
 			word = word
 			.replace(/[\u2018\u2019]/g, "'")
 			.replace(/[\u201C\u201D]/g, '"')
 			.toLowerCase();
 
-			const files = fs.readdirSync(
-				path.resolve(`${__dirname}/../../assets/templates/expand/words/`)
-			).filter(file => file.startsWith(word));
+			const wordMatches = wordFiles.filter(file => file.split('_')[0] === word);
 
-			if (files.length > 0) {
-				let currentLine = lines.length - 1;
-				const currentLength = lines[currentLine].join('').length;
-
+			if (wordMatches.length > 0) {
 				if (currentLength + word.length > 40) currentLine = currentLine + 1;
 				lines[currentLine] = lines[currentLine] ? lines[currentLine].concat([word]) : [word];
 				lines[currentLine].push(' ');
 			} else {
 				const characters = word.split('');
 				characters.push(' ');
-
-				let currentLine = lines.length - 1;
-				const currentLength = lines[currentLine].join().length;
 
 				if (currentLength + characters.length > 40) currentLine = currentLine + 1;
 				lines[currentLine] = lines[currentLine] ? lines[currentLine].concat(characters) : characters;
@@ -88,15 +90,17 @@ module.exports = {
 						if (c === '_') c = '_UNDERSCORE';
 						if (c === '#') c = '_POUND';
 
+						const wordMatches = wordFiles.filter(file => file.split('_')[0] === c);
+
 						const files = fs.readdirSync(
-							path.resolve(`${__dirname}/../../assets/templates/expand/${c.length > 1 ? 'words/' : 'characters/'}`)
-						).filter(file => file.startsWith(c));
+							path.resolve(`${__dirname}/../../assets/templates/expand/${wordMatches.length > 0 ? 'words/' : 'characters/'}`)
+						).filter(file => wordMatches.length > 0 ? file.split('_')[0] === c : file.startsWith(c));
 
 						if (files.length < 1) {
 							return path.resolve(`${__dirname}/../../assets/templates/expand/characters/_SPACE.png`);
 						} else {
 							const randomChar = Math.round(Math.random() * (files.length - 1));
-							return path.resolve(`${__dirname}/../../assets/templates/expand/${c.length > 1 ? 'words/' : 'characters/'}${c}${randomChar}.png`);
+							return path.resolve(`${__dirname}/../../assets/templates/expand/${wordMatches.length > 0 ? 'words/' : 'characters/'}${c}${wordMatches.length > 0 ? '_' : ''}${randomChar}.png`);
 						}
 					}),
 					linePath
